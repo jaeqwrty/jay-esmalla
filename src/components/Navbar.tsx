@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link, NavLink } from "react-router-dom";
 
 const navItems = [
-  { label: "HOME", href: "#home" },
-  { label: "ABOUT", href: "#about" },
-  { label: "PROJECTS", href: "#projects" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "HOME", href: "/" },
+  { label: "ABOUT", href: "/about" },
+  { label: "PROJECTS", href: "/projects" },
+  { label: "TESTIMONIALS", href: "/testimonials" },
+  { label: "CONTACT", href: "/contact" },
 ];
 
 const Navbar = () => {
@@ -27,20 +29,24 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="#home" className="font-display text-xs neon-text-pink">
+        <Link to="/" className="font-display text-xs neon-text-pink">
           {'<JE/>'}
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden md:flex gap-6">
           {navItems.map((item) => (
-            <a
+            <NavLink
               key={item.label}
-              href={item.href}
-              className="font-heading text-xs tracking-widest text-muted-foreground hover:text-primary transition-colors duration-300"
+              to={item.href}
+              className={({ isActive }) =>
+                `font-heading text-xs tracking-widest transition-colors duration-300 ${
+                  isActive ? "text-primary neon-text-pink" : "text-muted-foreground hover:text-primary"
+                }`
+              }
             >
               {item.label}
-            </a>
+            </NavLink>
           ))}
         </div>
 
@@ -61,14 +67,18 @@ const Navbar = () => {
           className="md:hidden bg-background/95 backdrop-blur-md border-b border-border px-4 pb-4"
         >
           {navItems.map((item) => (
-            <a
+            <NavLink
               key={item.label}
-              href={item.href}
+              to={item.href}
               onClick={() => setMobileOpen(false)}
-              className="block py-2 font-heading text-xs tracking-widest text-muted-foreground hover:text-primary transition-colors"
+              className={({ isActive }) =>
+                `block py-2 font-heading text-xs tracking-widest transition-colors ${
+                  isActive ? "text-primary neon-text-pink" : "text-muted-foreground hover:text-primary"
+                }`
+              }
             >
               {item.label}
-            </a>
+            </NavLink>
           ))}
         </motion.div>
       )}

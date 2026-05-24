@@ -5,6 +5,7 @@ export interface Project {
   category: "flutter" | "web" | "other";
   technologies: string[];
   image: string;
+  thumbnail?: "auth-gate";
   liveUrl?: string;
   githubUrl?: string;
 }
@@ -15,66 +16,60 @@ export interface Skill {
   category: "frontend" | "mobile" | "backend" | "tools";
 }
 
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  quote: string;
+}
+
 export const projects: Project[] = [
   {
-    id: "1",
-    title: "NeonChat",
-    description: "A real-time messaging app built with Flutter featuring end-to-end encryption and sleek Material 3 design.",
-    category: "flutter",
-    technologies: ["Flutter", "Dart", "Firebase", "WebSocket"],
-    image: "/placeholder.svg",
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: "2",
-    title: "PixelTracker",
-    description: "Habit tracking app with beautiful pixel-art visualizations and gamification elements.",
-    category: "flutter",
-    technologies: ["Flutter", "Dart", "SQLite", "Riverpod"],
-    image: "/placeholder.svg",
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: "3",
-    title: "RetroBoard",
-    description: "A collaborative kanban board with real-time updates, drag-and-drop, and retro synthwave theming.",
+    id: "lolas-kusina",
+    title: "LolasKusina",
+    description: "A food package ordering system for browsing catering options, placing orders, and managing customer requests.",
     category: "web",
-    technologies: ["React", "TypeScript", "Tailwind", "Supabase"],
-    image: "/placeholder.svg",
-    liveUrl: "#",
-    githubUrl: "#",
+    technologies: ["PHP", "Python", "CSS", "JavaScript", "Batchfile", "Dockerfile", "Shell"],
+    image: "/lolas-kusina-auth-gate.png",
+    thumbnail: "auth-gate",
+    githubUrl: "https://github.com/jaeqwrty/LolasKusina",
   },
   {
-    id: "4",
-    title: "SynthAPI",
-    description: "RESTful API dashboard with interactive documentation, real-time monitoring, and neon-themed UI.",
-    category: "web",
-    technologies: ["Next.js", "Node.js", "PostgreSQL", "Redis"],
-    image: "/placeholder.svg",
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: "5",
-    title: "WaveForm",
-    description: "Music visualization app that creates stunning audio-reactive animations synced to your beats.",
+    id: "thryfto",
+    title: "Thryfto",
+    description: "A peer-to-peer thrift marketplace for listing pre-loved items, discovering local finds, and connecting buyers with sellers.",
     category: "flutter",
-    technologies: ["Flutter", "Dart", "AudioKit", "Custom Painter"],
+    technologies: ["Flutter", "Dart", "Firebase", "Marketplace"],
     image: "/placeholder.svg",
-    liveUrl: "#",
-    githubUrl: "#",
   },
   {
-    id: "6",
-    title: "GridRunner",
-    description: "Portfolio template generator with drag-and-drop builder and multiple retro-themed templates.",
+    id: "rimcraft",
+    title: "RimCraft",
+    description: "A rim customization web app for previewing wheel styles, finishes, and wide-rim fitment before checkout.",
     category: "web",
-    technologies: ["React", "TypeScript", "Framer Motion", "Tailwind"],
+    technologies: ["React", "TypeScript", "Tailwind", "Configurator"],
     image: "/placeholder.svg",
-    liveUrl: "#",
-    githubUrl: "#",
+  },
+];
+
+export const testimonials: Testimonial[] = [
+  {
+    id: "client-1",
+    name: "Maria Santos",
+    role: "Small Business Owner",
+    quote: "The app felt simple, fast, and easy to understand. It turned our ordering process into something customers could use without asking for help.",
+  },
+  {
+    id: "client-2",
+    name: "Daniel Reyes",
+    role: "Project Collaborator",
+    quote: "Jae is thoughtful with both design and implementation. The final interface looked polished while still keeping the user flow clear.",
+  },
+  {
+    id: "client-3",
+    name: "Alyssa Cruz",
+    role: "Beta Tester",
+    quote: "Everything was organized and responsive. The experience felt smooth on mobile, which made the project much easier to test.",
   },
 ];
 
@@ -97,5 +92,5 @@ export const socialLinks = {
   github: "https://github.com",
   linkedin: "https://linkedin.com",
   twitter: "https://twitter.com",
-  email: "hello@example.com",
+  email: "jaesmalla1@gmail.com",
 };

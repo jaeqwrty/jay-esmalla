@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { projects } from "@/data/portfolio";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, LockKeyhole } from "lucide-react";
 
 type Filter = "all" | "flutter" | "web";
 
@@ -67,9 +67,37 @@ const ProjectsSection = () => {
               >
                 {/* Thumbnail */}
                 <div className="relative h-40 mb-4 overflow-hidden rounded-sm bg-muted border border-border">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                    <span className="font-display text-xs text-muted-foreground">{project.category.toUpperCase()}</span>
-                  </div>
+                  {project.image !== "/placeholder.svg" ? (
+                    <img
+                      src={project.image}
+                      alt={`${project.title} preview`}
+                      className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : project.thumbnail === "auth-gate" ? (
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,hsl(var(--neon-yellow)/0.18),transparent_34%),linear-gradient(135deg,hsl(var(--card)),hsl(var(--muted)))] p-4">
+                      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-secondary to-[hsl(var(--neon-yellow))]" />
+                      <div className="flex h-full flex-col justify-between rounded-sm border border-secondary/25 bg-background/70 p-4 shadow-[0_0_28px_hsl(var(--secondary)/0.18)] backdrop-blur-sm">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-heading text-[10px] tracking-widest text-secondary">LOLAS KUSINA</p>
+                            <p className="font-mono-retro text-[9px] text-muted-foreground">AUTH GATE</p>
+                          </div>
+                          <div className="grid h-8 w-8 place-items-center rounded-sm border border-primary/50 text-primary">
+                            <LockKeyhole size={14} />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="h-6 rounded-sm border border-border bg-muted/80" />
+                          <div className="h-6 rounded-sm border border-border bg-muted/80" />
+                          <div className="h-7 rounded-sm border border-primary/60 bg-primary/15 shadow-[0_0_14px_hsl(var(--primary)/0.28)]" />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                      <span className="font-display text-xs text-muted-foreground">{project.category.toUpperCase()}</span>
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300" />
                 </div>
 

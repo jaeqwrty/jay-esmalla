@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const phrases = ["Flutter Developer", "Web Developer", "UI Enthusiast", "Code Architect"];
 
@@ -96,12 +97,12 @@ const HeroSection = () => {
           transition={{ delay: 1.2 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a href="#projects" className="neon-button text-sm">
+          <Link to="/projects" className="neon-button text-sm">
             View Projects
-          </a>
-          <a href="#contact" className="neon-button neon-button-blue text-sm">
+          </Link>
+          <Link to="/contact" className="neon-button neon-button-blue text-sm">
             Contact Me
-          </a>
+          </Link>
         </motion.div>
       </div>
 

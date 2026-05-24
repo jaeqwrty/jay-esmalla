@@ -1,21 +1,45 @@
 import { motion } from "framer-motion";
 import { socialLinks } from "@/data/portfolio";
 import { Github, Linkedin, Facebook, Mail, Send } from "lucide-react";
-import { useState } from "react";
+import { type ChangeEvent, type FormEvent, useState } from "react";
+
+const initialFormData = { name: "", email: "", message: "" };
+const contactEmail = socialLinks.email;
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState(initialFormData);
+  const [sendStatus, setSendStatus] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (field: keyof typeof formData) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [field]: e.target.value });
+  };
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    window.location.href = `mailto:jaesmalla1@gmail.com?subject=Portfolio Contact from ${formData.name}&body=${formData.message}`;
+
+    const trimmedData = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      message: formData.message.trim(),
+    };
+
+    const subject = `Portfolio Contact from ${trimmedData.name}`;
+    const body = [
+      `Name: ${trimmedData.name}`,
+      `Email: ${trimmedData.email}`,
+      "",
+      trimmedData.message,
+    ].join("\n");
+
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSendStatus(`Opening your email app to send this message to ${contactEmail}.`);
   };
 
   const socials = [
     { icon: Github, href: "https://github.com/jaeqwrty", label: "GitHub" },
     { icon: Linkedin, href: socialLinks.linkedin, label: "LinkedIn" },
     { icon: Facebook, href: "https://www.facebook.com/jaecoleeee/", label: "Facebook" },
-    { icon: Mail, href: "mailto:jaesmalla1@gmail.com", label: "Email" },
+    { icon: Mail, href: `mailto:${contactEmail}`, label: "Email" },
   ];
 
   return (
@@ -74,30 +98,41 @@ const ContactSection = () => {
               <input
                 type="text"
                 placeholder="Name"
+                aria-label="Name"
+                autoComplete="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={handleChange("name")}
                 className="w-full bg-muted border border-border rounded-sm px-4 py-2 font-mono-retro text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-colors"
                 required
               />
               <input
                 type="email"
                 placeholder="Email"
+                aria-label="Email"
+                autoComplete="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={handleChange("email")}
                 className="w-full bg-muted border border-border rounded-sm px-4 py-2 font-mono-retro text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-colors"
                 required
               />
               <textarea
                 placeholder="Message"
+                aria-label="Message"
                 rows={4}
+                minLength={10}
                 value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                onChange={handleChange("message")}
                 className="w-full bg-muted border border-border rounded-sm px-4 py-2 font-mono-retro text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-colors resize-none"
                 required
               />
               <button type="submit" className="neon-button w-full flex items-center justify-center gap-2 text-sm">
                 <Send size={14} /> TRANSMIT
               </button>
+              {sendStatus && (
+                <p className="font-mono-retro text-xs text-secondary" role="status">
+                  {sendStatus}
+                </p>
+              )}
             </form>
           </motion.div>
         </div>

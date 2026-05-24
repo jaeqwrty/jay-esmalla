@@ -112,9 +112,13 @@ const HeroSection = () => {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="w-5 h-8 border-2 border-primary/40 rounded-full flex justify-center pt-1">
+        <Link
+          to="/#about"
+          className="w-5 h-8 border-2 border-primary/40 rounded-full flex justify-center pt-1 transition-colors hover:border-primary"
+          aria-label="Scroll to about section"
+        >
           <div className="w-1 h-2 bg-primary/60 rounded-full" />
-        </div>
+        </Link>
       </motion.div>
     </section>
   );

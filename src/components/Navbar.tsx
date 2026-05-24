@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
   { label: "HOME", href: "/" },
-  { label: "ABOUT", href: "/about" },
   { label: "PROJECTS", href: "/projects" },
   { label: "TESTIMONIALS", href: "/testimonials" },
+  { label: "ARCADE", href: "/arcade" },
   { label: "CONTACT", href: "/contact" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (href: string) => {
+    if (href === "/") return location.pathname === "/";
+    return location.pathname === href;
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -34,19 +40,17 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex gap-6">
+        <div className="hidden md:flex gap-5">
           {navItems.map((item) => (
-            <NavLink
+            <Link
               key={item.label}
               to={item.href}
-              className={({ isActive }) =>
-                `font-heading text-xs tracking-widest transition-colors duration-300 ${
-                  isActive ? "text-primary neon-text-pink" : "text-muted-foreground hover:text-primary"
-                }`
-              }
+              className={`font-heading text-xs tracking-widest transition-colors duration-300 ${
+                isActive(item.href) ? "text-primary neon-text-pink" : "text-muted-foreground hover:text-primary"
+              }`}
             >
               {item.label}
-            </NavLink>
+            </Link>
           ))}
         </div>
 
@@ -67,18 +71,16 @@ const Navbar = () => {
           className="md:hidden bg-background/95 backdrop-blur-md border-b border-border px-4 pb-4"
         >
           {navItems.map((item) => (
-            <NavLink
+            <Link
               key={item.label}
               to={item.href}
               onClick={() => setMobileOpen(false)}
-              className={({ isActive }) =>
-                `block py-2 font-heading text-xs tracking-widest transition-colors ${
-                  isActive ? "text-primary neon-text-pink" : "text-muted-foreground hover:text-primary"
-                }`
-              }
+              className={`block py-2 font-heading text-xs tracking-widest transition-colors ${
+                isActive(item.href) ? "text-primary neon-text-pink" : "text-muted-foreground hover:text-primary"
+              }`}
             >
               {item.label}
-            </NavLink>
+            </Link>
           ))}
         </motion.div>
       )}

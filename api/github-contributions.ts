@@ -12,10 +12,12 @@
 const USERNAME = "jaeqwrty";
 
 // Last 12 months — GitHub default (no from/to = rolling 52-week window)
+// includePrivateContributions: true ensures the count matches what GitHub
+// shows when you are logged in (private commits, PRs, reviews, issues).
 const QUERY_LAST = `
   query($login: String!) {
     user(login: $login) {
-      contributionsCollection {
+      contributionsCollection(includePrivateContributions: true) {
         contributionCalendar {
           totalContributions
           weeks {
@@ -31,7 +33,7 @@ const QUERY_LAST = `
 const QUERY_YEAR = `
   query($login: String!, $from: DateTime!, $to: DateTime!) {
     user(login: $login) {
-      contributionsCollection(from: $from, to: $to) {
+      contributionsCollection(from: $from, to: $to, includePrivateContributions: true) {
         contributionCalendar {
           totalContributions
           weeks {

@@ -243,9 +243,6 @@ const GitHubSection = () => {
         <h2 className="font-display text-3xl md:text-4xl neon-text-pink-bold mb-4">
           GITHUB.LOG
         </h2>
-        <p className="font-mono-retro text-muted-foreground text-sm max-w-xl mx-auto">
-          Live contribution graph — sourced directly from GitHub's official GraphQL API.
-        </p>
         <div className="mt-4 h-px w-32 mx-auto bg-gradient-to-r from-transparent via-secondary to-transparent" />
       </motion.div>
 
@@ -285,19 +282,6 @@ const GitHubSection = () => {
                       ? "contributions in the last year"
                       : `contributions in ${activeTab}`}
                   </span>
-                  {isFallback && (
-                    <span
-                      className="font-mono-retro text-[9px] tracking-widest px-1.5 py-0.5 rounded-sm border"
-                      style={{
-                        color: "hsl(46 100% 60% / 0.7)",
-                        borderColor: "hsl(46 100% 60% / 0.25)",
-                        background: "hsl(46 100% 60% / 0.06)",
-                      }}
-                      title="Showing public contributions only. Deploy to Vercel with GITHUB_TOKEN set for full accuracy."
-                    >
-                      PUBLIC ONLY
-                    </span>
-                  )}
                 </div>
               )}
             </div>
@@ -333,7 +317,7 @@ const GitHubSection = () => {
             <div className="flex flex-col h-32 items-center justify-center gap-3">
               <div className="flex items-center gap-2 text-red-400/50">
                 <AlertCircle size={14} />
-                <span className="font-mono-retro text-xs">GitHub API unreachable</span>
+                <span className="font-mono-retro text-xs">{error}</span>
               </div>
               <a
                 href={profileUrl}

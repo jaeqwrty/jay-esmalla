@@ -83,7 +83,7 @@ export default async function handler(req: any, res: any) {
     const ghRes = await fetch("https://api.github.com/graphql", {
       method: "POST",
       headers: {
-        Authorization: `bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
         "User-Agent": "portfolio-contributions-widget/1.0",
       },

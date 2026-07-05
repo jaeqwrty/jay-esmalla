@@ -64,6 +64,56 @@ const dow = (dateStr: string): number => {
   return new Date(y, m - 1, d).getDay();
 };
 
+/* ── Jogruber fallback ───────────────────────────────────
+   Used when /api/github-contributions is unreachable
+   (e.g. local `npm run dev` without `vercel dev`).
+   Returns public contributions only — numbers will be lower
+   than the real total until the Vercel function is live.   */
+const JOGRUBER_COLORS = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+
+const jogruberToCalendar = (raw: any, year: string): CalendarData => {
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10);
+
+  let filtered: any[];
+  let total: number;
+
+  if (year === "last") {
+    const cutoff = new Date(now);
+    cutoff.setFullYear(cutoff.getFullYear() - 1);
+    const cutoffStr = cutoff.toISOString().slice(0, 10);
+    filtered = raw.contributions.filter((c: any) => c.date >= cutoffStr && c.date <= todayStr);
+    total = filtered.reduce((s: number, c: any) => s + c.count, 0);
+  } else {
+    filtered = raw.contributions.filter(
+      (c: any) => c.date.startsWith(year) && c.date <= todayStr
+    );
+    total = raw.total?.[year] ?? 0;
+  }
+
+  // Convert flat day list → week array
+  const weeks: Week[] = [];
+  let currentWeek: Day[] = [];
+
+  filtered.forEach((c: any) => {
+    if (getDow(c.date) === 0 && currentWeek.length > 0) {
+      weeks.push({ days: currentWeek });
+      currentWeek = [];
+    }
+    currentWeek.push({
+      date:  c.date,
+      count: c.count,
+      color: JOGRUBER_COLORS[c.level] ?? JOGRUBER_COLORS[0],
+    });
+  });
+  if (currentWeek.length > 0) weeks.push({ days: currentWeek });
+
+  return { total, weeks };
+};
+
+// alias used inside jogruberToCalendar (defined above as `dow`)
+const getDow = dow;
+
 /**
  * Convert API week objects into padded 7-cell columns.
  * GitHub API guarantees weeks run Sun→Sat; only the first and last
@@ -135,23 +185,41 @@ const fadeUp = {
 
 /* ── Main Section ────────────────────────────────────── */
 const GitHubSection = () => {
-  const [activeTab, setActiveTab] = useState("last");
-  const [data,      setData]      = useState<CalendarData | null>(null);
-  const [loading,   setLoading]   = useState(true);
-  const [error,     setError]     = useState<string | null>(null);
+  const [activeTab,   setActiveTab]   = useState("last");
+  const [data,        setData]        = useState<CalendarData | null>(null);
+  const [loading,     setLoading]     = useState(true);
+  const [error,       setError]       = useState<string | null>(null);
+  const [isFallback,  setIsFallback]  = useState(false);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
     setData(null);
+    setIsFallback(false);
 
     const qs  = activeTab !== "last" ? `?year=${activeTab}` : "";
-    const url = `/api/github-contributions${qs}`;
+    const username = "jaeqwrty";
 
-    fetch(url)
-      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-      .then(j  => { if (j.error) throw new Error(j.error); setData(j); })
-      .catch(e => setError(e.message))
+    // ── Stage 1: secure Vercel serverless function (includes private contributions)
+    const tryVercel = (): Promise<CalendarData> =>
+      fetch(`/api/github-contributions${qs}`)
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+        .then(j => { if (j.error) throw new Error(j.error); return j as CalendarData; });
+
+    // ── Stage 2: jogruber public API (public contributions only — fallback)
+    const tryJogruber = (): Promise<CalendarData> =>
+      fetch(`https://github-contributions-api.jogruber.de/v4/${username}`)
+        .then(r => { if (!r.ok) throw new Error(`Jogruber HTTP ${r.status}`); return r.json(); })
+        .then(raw => jogruberToCalendar(raw, activeTab));
+
+    tryVercel()
+      .then(d => { setData(d); setIsFallback(false); })
+      .catch(() =>
+        // Vercel function unreachable — use public fallback silently
+        tryJogruber()
+          .then(d => { setData(d); setIsFallback(true); })
+          .catch(e => setError(e.message))
+      )
       .finally(() => setLoading(false));
   }, [activeTab]);
 
@@ -205,19 +273,32 @@ const GitHubSection = () => {
                 </span>
               )}
               {!loading && !error && data && (
-                <>
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span
                     className="font-display text-base"
                     style={{ color: "hsl(186 100% 55%)", textShadow: "0 0 12px hsl(186 100% 50% / 0.5)" }}
                   >
                     {data.total.toLocaleString()}
                   </span>
-                  <span className="text-muted-foreground/55 text-xs tracking-wider ml-2">
+                  <span className="text-muted-foreground/55 text-xs tracking-wider">
                     {activeTab === "last"
                       ? "contributions in the last year"
                       : `contributions in ${activeTab}`}
                   </span>
-                </>
+                  {isFallback && (
+                    <span
+                      className="font-mono-retro text-[9px] tracking-widest px-1.5 py-0.5 rounded-sm border"
+                      style={{
+                        color: "hsl(46 100% 60% / 0.7)",
+                        borderColor: "hsl(46 100% 60% / 0.25)",
+                        background: "hsl(46 100% 60% / 0.06)",
+                      }}
+                      title="Showing public contributions only. Deploy to Vercel with GITHUB_TOKEN set for full accuracy."
+                    >
+                      PUBLIC ONLY
+                    </span>
+                  )}
+                </div>
               )}
             </div>
 

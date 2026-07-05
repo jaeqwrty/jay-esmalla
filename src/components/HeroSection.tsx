@@ -163,8 +163,8 @@ const HeroSection = () => {
             View Projects
           </Link>
           <a
-            href="/resume.pdf"
-            download
+            href="/cv.pdf"
+            download="Esmalla_Jay_CV.pdf"
             className="neon-button neon-button-blue text-xs w-full sm:w-auto"
           >
             Download CV
@@ -179,23 +179,6 @@ const HeroSection = () => {
             Contact Me
           </Link>
         </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-        animate={{ y: [0, 7, 0] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="font-mono-retro text-[9px] text-muted-foreground/40 tracking-widest">SCROLL</span>
-        <Link
-          to="/#about"
-          className="w-5 h-8 border-2 border-primary/30 rounded-full flex justify-center pt-1.5
-                     hover:border-primary transition-colors"
-          aria-label="Scroll to about section"
-        >
-          <div className="w-1 h-2 bg-primary/50 rounded-full" />
-        </Link>
       </motion.div>
     </section>
   );

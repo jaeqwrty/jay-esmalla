@@ -17,7 +17,7 @@ const USERNAME = "jaeqwrty";
 const QUERY_LAST = `
   query($login: String!) {
     user(login: $login) {
-      contributionsCollection(includePrivateContributions: true) {
+      contributionsCollection {
         contributionCalendar {
           totalContributions
           weeks {
@@ -33,7 +33,7 @@ const QUERY_LAST = `
 const QUERY_YEAR = `
   query($login: String!, $from: DateTime!, $to: DateTime!) {
     user(login: $login) {
-      contributionsCollection(from: $from, to: $to, includePrivateContributions: true) {
+      contributionsCollection(from: $from, to: $to) {
         contributionCalendar {
           totalContributions
           weeks {

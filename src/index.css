@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer base {
   :root {
@@ -22,7 +23,7 @@
     --secondary-foreground: 240 20% 4%;
 
     --muted: 240 15% 15%;
-    --muted-foreground: 240 10% 55%;
+    --muted-foreground: 240 15% 75%;
 
     --accent: 276 100% 50%;
     --accent-foreground: 180 100% 95%;
@@ -40,10 +41,13 @@
     --neon-orange: 18 100% 60%;
     --neon-green: 120 100% 50%;
 
-    --glow-pink: 0 0 10px hsl(326 100% 70%), 0 0 20px hsl(326 100% 70% / 0.5), 0 0 40px hsl(326 100% 70% / 0.3);
-    --glow-blue: 0 0 10px hsl(186 100% 50%), 0 0 20px hsl(186 100% 50% / 0.5), 0 0 40px hsl(186 100% 50% / 0.3);
-    --glow-purple: 0 0 10px hsl(276 100% 50%), 0 0 20px hsl(276 100% 50% / 0.5), 0 0 40px hsl(276 100% 50% / 0.3);
-    --glow-yellow: 0 0 10px hsl(52 100% 50%), 0 0 20px hsl(52 100% 50% / 0.5), 0 0 40px hsl(52 100% 50% / 0.3);
+    --glow-pink: 0 0 6px hsl(326 100% 70% / 0.5), 0 0 12px hsl(326 100% 70% / 0.25);
+    --glow-blue: 0 0 6px hsl(186 100% 50% / 0.5), 0 0 12px hsl(186 100% 50% / 0.25);
+    --glow-purple: 0 0 6px hsl(276 100% 50% / 0.5), 0 0 12px hsl(276 100% 50% / 0.25);
+    --glow-yellow: 0 0 6px hsl(52 100% 50% / 0.5), 0 0 12px hsl(52 100% 50% / 0.25);
+
+    --glow-bold-pink: 0 0 12px hsl(326 100% 70%), 0 0 24px hsl(326 100% 70% / 0.5), 0 0 48px hsl(326 100% 70% / 0.3);
+    --glow-bold-blue: 0 0 12px hsl(186 100% 50%), 0 0 24px hsl(186 100% 50% / 0.5), 0 0 48px hsl(186 100% 50% / 0.3);
 
     --font-display: 'Press Start 2P', monospace;
     --font-heading: 'Orbitron', sans-serif;
@@ -85,9 +89,19 @@
     text-shadow: var(--glow-pink);
   }
 
+  .neon-text-pink-bold {
+    color: hsl(var(--primary));
+    text-shadow: var(--glow-bold-pink);
+  }
+
   .neon-text-blue {
     color: hsl(var(--secondary));
     text-shadow: var(--glow-blue);
+  }
+
+  .neon-text-blue-bold {
+    color: hsl(var(--secondary));
+    text-shadow: var(--glow-bold-blue);
   }
 
   .neon-text-purple {
@@ -238,3 +252,18 @@
   0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
   100% { transform: perspective(500px) rotateX(60deg) translateY(60px); }
 }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+

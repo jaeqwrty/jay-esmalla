@@ -1,7 +1,11 @@
-import ContactSection from "@/components/ContactSection";
+import { useEffect } from "react";
 import PageLayout from "@/components/PageLayout";
+import ContactSection from "@/components/ContactSection";
 
 const Contact = () => {
+  useEffect(() => {
+    document.title = "Contact | Jay Esmalla";
+  }, []);
   return (
     <PageLayout>
       <ContactSection />

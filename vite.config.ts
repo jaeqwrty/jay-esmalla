@@ -10,6 +10,14 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    // Proxy /api/* to the Vercel dev server so serverless functions work locally.
+    // Run `vercel dev` (not `npm run dev`) to get accurate GitHub data locally.
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
   },
   plugins: [react()],
   resolve: {

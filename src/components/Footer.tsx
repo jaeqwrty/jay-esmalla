@@ -10,13 +10,7 @@ const Footer = () => {
     { icon: Mail, href: `mailto:${contactEmail}`, label: "Email" },
   ];
 
-  const footerNav = [
-    { label: "HOME",           href: "/" },
-    { label: "PROJECTS",       href: "/projects" },
-    { label: "CERTIFICATIONS", href: "/certifications" },
-    { label: "TESTIMONIALS",   href: "/testimonials" },
-    { label: "CONTACT",        href: "/contact" },
-  ];
+
 
 
   return (
@@ -32,18 +26,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Center: Quick Links */}
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-          {footerNav.map((item) => (
-            <Link
-              key={item.label}
-              to={item.href}
-              className="font-heading text-[10px] tracking-widest text-muted-foreground hover:text-primary transition-colors duration-300"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
 
         {/* Right Side: Social Icons */}
         <div className="flex gap-4">

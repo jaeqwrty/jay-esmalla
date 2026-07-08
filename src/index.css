@@ -266,4 +266,11 @@
   scrollbar-width: none;
 }
 
+@keyframes scan-animation {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+
 

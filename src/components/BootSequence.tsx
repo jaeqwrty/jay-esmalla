@@ -72,6 +72,7 @@ const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
               setAccessGranted(true);
               setTimeout(() => {
                 sessionStorage.setItem("portfolio_booted", "true");
+                window.scrollTo(0, 0);
                 onComplete();
               }, 700); // reduced from 1200ms
             }, 180); // reduced from 350ms

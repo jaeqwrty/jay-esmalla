@@ -35,6 +35,18 @@ const ScrollToHash = () => {
 const App = () => {
   const [booting, setBooting] = useState(true);
 
+  useEffect(() => {
+    if (!booting) {
+      window.scrollTo(0, 0);
+      const t1 = setTimeout(() => window.scrollTo(0, 0), 50);
+      const t2 = setTimeout(() => window.scrollTo(0, 0), 150);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    }
+  }, [booting]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

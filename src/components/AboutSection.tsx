@@ -1,16 +1,33 @@
 import { motion } from "framer-motion";
 import {
   Smartphone, Terminal, Code2, Wind, Globe, Server,
-  Flame, Database, GitBranch, Figma, Box, Layers,
+  Flame, Database, GitBranch, Figma, Box, Layers, Github,
   type LucideIcon,
+  Paintbrush,
 } from "lucide-react";
 
 /* ── Icon map ─────────────────────────────────────────── */
 const ICON_MAP: Record<string, LucideIcon> = {
-  flutter: Smartphone, dart: Terminal, react: Layers,
-  typescript: Code2, "tailwind css": Wind, "next.js": Globe,
-  "node.js": Server, firebase: Flame, supabase: Database,
-  git: GitBranch, figma: Figma, docker: Box,
+  flutter: Smartphone,
+  dart: Terminal,
+  react: Layers,
+  "vue.js": Layers,
+  typescript: Code2,
+  "tailwind css": Wind,
+  "next.js": Globe,
+  "html": Code2,
+  "css": Paintbrush,
+  javascript: Code2,
+  "node.js": Server,
+  python: Code2,
+  php: Code2,
+  mysql: Database,
+  firebase: Flame,
+  supabase: Database,
+  git: GitBranch,
+  github: Github,
+  figma: Figma,
+  docker: Box,
 };
 const getIcon = (name: string): LucideIcon => ICON_MAP[name.toLowerCase()] ?? Code2;
 
@@ -24,17 +41,17 @@ const STACK = [
   {
     label: "Frontend",
     accent: "hsl(186 100% 50%)",
-    items: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
+    items: ["React", "Vue.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS", "JavaScript", "Next.js"],
   },
   {
-    label: "Backend",
+    label: "Backend & Data",
     accent: "hsl(276 100% 65%)",
-    items: ["Node.js", "Firebase", "Supabase"],
+    items: ["Node.js", "Python", "PHP", "MySQL", "Firebase", "Supabase"],
   },
   {
     label: "Tools",
     accent: "hsl(46 100% 60%)",
-    items: ["Git", "Figma", "Docker"],
+    items: ["Git", "GitHub", "Figma", "Docker"],
   },
 ];
 
